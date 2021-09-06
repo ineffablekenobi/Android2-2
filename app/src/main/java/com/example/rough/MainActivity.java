@@ -31,20 +31,22 @@ public class MainActivity extends AppCompatActivity {
     EditText writingSpace;
     DocumentReference reference;
     ArrayList<Audio> audioList;
-    int sessionPlayIndex = 0;
-    private static final int audioListSize = 1;
+    int sessionPlayIndex ;
+    private static final int audioListSize = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // when you start the app this function is executed
         // pause feature is removed
         super.onCreate(savedInstanceState);
+        this.sessionPlayIndex = 0;
         setContentView(R.layout.activity_main);
         setTitle("Pro1");
         writingSpace = findViewById(R.id.writingspace);
 
         pp = findViewById(R.id.ppf);
         getData();
+
     }
 
     public void checkButton(View view){
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         int p = 0;
         answer = answer.toLowerCase();
-        String correctAnswer = audioList.get(sessionPlayIndex).getValidAnswer();
+        String correctAnswer = audioList.get(this.sessionPlayIndex).getValidAnswer();
         boolean correct = true;
         String compString = "";
         for(int i = 0; i < answer.length(); i++){
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 compString += answer.charAt(i);
             }
         }
+
+
+        Log.d(compString, correctAnswer);
 
         correct = correctAnswer.equals(compString);
 
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     if(documentSnapshot.exists()){
                         String validAnswer = documentSnapshot.getString("ValidAnswer");
                         String dataSource = documentSnapshot.getString("DataSource");
+
                         audioList.add(new Audio(validAnswer,dataSource));
                     }else{
                         Log.d("this doesnt work", "GG");
@@ -102,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
 
     }
 
@@ -124,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     private void startMedia() throws IOException {
 
         m1 = new MediaPlayer();
-        m1.setDataSource(audioList.get(sessionPlayIndex).getDataSource());
+        m1.setDataSource(audioList.get(this.sessionPlayIndex).getDataSource());
         pp.setImageResource(R.drawable.stop_foreground);
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             // linking the listener so it gets called after music is complete
@@ -134,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 stopMedia();
             }
         });
+
         m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -161,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void skipAudio(){
         stopMedia();
-        sessionPlayIndex++;
-        sessionPlayIndex = sessionPlayIndex % audioListSize;
+        this.sessionPlayIndex++;
+        this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
     }
 
     public void stop(View v2){

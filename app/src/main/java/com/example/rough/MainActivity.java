@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.rough.DTO.Audio;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,13 +22,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer m1;
     ImageButton pp;
     DocumentReference reference;
-    ArrayList<String> audioList;
+    ArrayList<Audio> audioList;
+    int sessionPlayIndex = 0;
     private static final int audioListSize = 1;
 
     @Override
@@ -43,13 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         audioList = new ArrayList<>();
+
         for(int i  = 0; i < audioListSize; i++) {
             reference = FirebaseFirestore.getInstance().collection("Audio").document(i+"");
             reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     if(documentSnapshot.exists()){
-                        audioList.add(documentSnapshot.getString("ValidAnswer"));
+                        String validAnswer = documentSnapshot.getString("ValidAnswer");
+                        String dataSource = documentSnapshot.getString("DataSource");
+                        audioList.add(new Audio(validAnswer,dataSource));
                     }else{
                         Log.d("this doesnt work", "GG");
                     }
@@ -61,34 +67,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     public void play(View v1){
         // the function is called from design
         // when you press the play button the function is a on click listener
 
-
         if(m1 == null){
-            startMedia(R.raw.s1);
+            try {
+                startMedia();
+            }catch (IOException io){
+                Log.d("ExceptionLog: ", "StarMedia Calling time exception");
+            }
         }else{
             stopMedia();
         }
 
     }
 
-    private void startMedia(int id) {
+    private void startMedia() throws IOException {
 
-        m1 = MediaPlayer.create(this, id);
+        m1 = new MediaPlayer();
+        m1.setDataSource(audioList.get(sessionPlayIndex).getDataSource());
         pp.setImageResource(R.drawable.stop_foreground);
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             // linking the listener so it gets called after music is complete
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Log.d("Oncompletion", "is called");
+                //Log.d("Oncompletion", "is called");
                 stopMedia();
             }
         });
-        m1.start();
+        m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+
+        m1.prepare();
+
     }
 
 
@@ -99,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
             m1 = null;
         }
         pp.setImageResource(R.drawable.play_foreground);
+    }
+
+    public void skip(View view){
+        stopMedia();
+        sessionPlayIndex++;
+        sessionPlayIndex = sessionPlayIndex % audioListSize;
     }
 
     public void stop(View v2){

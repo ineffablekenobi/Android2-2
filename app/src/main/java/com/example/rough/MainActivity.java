@@ -1,5 +1,6 @@
 package com.example.rough;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
@@ -9,24 +10,58 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer m1;
-    //Integer resume; // at a point(milisecond) we should resume the music
     ImageButton pp;
+    DocumentReference reference;
+    ArrayList<String> audioList;
+    private static final int audioListSize = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // when you start the app this function is executed
+        // pause feature is removed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Pro1");
         pp = findViewById(R.id.ppf);
+        getData();
     }
 
-
-    // pause feature must be removed
+    private void getData() {
+        audioList = new ArrayList<>();
+        for(int i  = 0; i < audioListSize; i++) {
+            reference = FirebaseFirestore.getInstance().collection("Audio").document(i+"");
+            reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        audioList.add(documentSnapshot.getString("ValidAnswer"));
+                    }else{
+                        Log.d("this doesnt work", "GG");
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("this doesnt work", "GG");
+                }
+            });
+        }
+    }
 
     public void play(View v1){
         // the function is called from design
@@ -42,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMedia(int id) {
+
         m1 = MediaPlayer.create(this, id);
         pp.setImageResource(R.drawable.stop_foreground);
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

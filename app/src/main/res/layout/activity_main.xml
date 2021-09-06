@@ -72,4 +72,17 @@
         app:srcCompat="@drawable/stop_foreground"
         app:tint="#F44336" />
 
+    <Button
+        android:id="@+id/checkanswerbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkButton"
+        android:text="Check"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintStart_toEndOf="@+id/writingspace"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

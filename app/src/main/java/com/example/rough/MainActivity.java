@@ -42,16 +42,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Pro1");
         writingSpace = findViewById(R.id.writingspace);
-        writingSpace.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                checkAnswer();
-                Log.d("GGWP", "FUCK YOU");
-                return false;
-            }
-        });
+
         pp = findViewById(R.id.ppf);
         getData();
+    }
+
+    public void checkButton(View view){
+        Log.d("Tor mare chudi", "GGWP");
+        checkAnswer();
     }
 
     private void checkAnswer() {
@@ -63,22 +61,19 @@ public class MainActivity extends AppCompatActivity {
         answer = answer.toLowerCase();
         String correctAnswer = audioList.get(sessionPlayIndex).getValidAnswer();
         boolean correct = true;
-        for(int i = 0; i < answer.length(); i++ ){
-            if(answer.charAt(i) != correctAnswer.charAt(p)){
-                if(answer.charAt(i) >= 'a' && answer.charAt(i) <= 'z'){
-                    correct = false;
-                    break;
-                }else{
-                    continue;
-                }
+        String compString = "";
+        for(int i = 0; i < answer.length(); i++){
+            if(answer.charAt(i) >= 'a' && answer.charAt(i) <= 'z') {
+                compString += answer.charAt(i);
             }
-            p++;
         }
 
+        correct = correctAnswer.equals(compString);
+
         if(correct){
-            Toast.makeText(this,"Your answer is correct",Toast.LENGTH_LONG);
+            Toast.makeText(this,"Your answer is correct",Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this,"Your answer is incorrect",Toast.LENGTH_LONG);
+            Toast.makeText(this,"Your answer is incorrect",Toast.LENGTH_LONG).show();
         }
 
         skipAudio();

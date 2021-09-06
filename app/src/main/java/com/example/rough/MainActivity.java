@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkButton(View view){
-        Log.d("Tor mare chudi", "GGWP");
         checkAnswer();
     }
 

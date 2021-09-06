@@ -6,28 +6,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rough.DTO.Audio;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer m1;
     ImageButton pp;
+    EditText writingSpace;
     DocumentReference reference;
     ArrayList<Audio> audioList;
     int sessionPlayIndex = 0;
@@ -40,9 +41,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Pro1");
+        writingSpace = findViewById(R.id.writingspace);
+        writingSpace.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                checkAnswer();
+                Log.d("GGWP", "FUCK YOU");
+                return false;
+            }
+        });
         pp = findViewById(R.id.ppf);
         getData();
     }
+
+    private void checkAnswer() {
+        // check the answer here
+        //if answers is correct
+        String answer = writingSpace.getText().toString();
+
+        int p = 0;
+        answer = answer.toLowerCase();
+        String correctAnswer = audioList.get(sessionPlayIndex).getValidAnswer();
+        boolean correct = true;
+        for(int i = 0; i < answer.length(); i++ ){
+            if(answer.charAt(i) != correctAnswer.charAt(p)){
+                if(answer.charAt(i) >= 'a' && answer.charAt(i) <= 'z'){
+                    correct = false;
+                    break;
+                }else{
+                    continue;
+                }
+            }
+            p++;
+        }
+
+        if(correct){
+            Toast.makeText(this,"Your answer is correct",Toast.LENGTH_LONG);
+        }else{
+            Toast.makeText(this,"Your answer is incorrect",Toast.LENGTH_LONG);
+        }
+
+        skipAudio();
+    }
+
 
     private void getData() {
         audioList = new ArrayList<>();
@@ -121,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void skip(View view){
+        skipAudio();
+    }
+
+    private void skipAudio(){
         stopMedia();
         sessionPlayIndex++;
         sessionPlayIndex = sessionPlayIndex % audioListSize;

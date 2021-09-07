@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     DocumentReference reference;
     ArrayList<Audio> audioList;
     int sessionPlayIndex ;
-    private static final int audioListSize = 2;
+    private static final int audioListSize = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         skipAudio();
+        writingSpace.setText("");
     }
 
 
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void skip(View view){
         skipAudio();
+        writingSpace.setText("");
     }
 
     private void skipAudio(){

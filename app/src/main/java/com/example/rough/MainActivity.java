@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void stopMedia() {
         // planning to use this function to stop any media
         if(m1 != null) {

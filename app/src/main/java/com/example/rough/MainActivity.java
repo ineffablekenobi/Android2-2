@@ -1,5 +1,7 @@
 package com.example.rough;
 
+import static java.lang.Math.min;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +23,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Audio> audioList;
     int sessionPlayIndex ;
     private static final int audioListSize = 4;
+    private static int stringCheckDp[][];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkButton(View view){
         checkAnswer();
+    }
+
+    private int stringComp(String str1, String str2, int i, int j){
+        if(i == 0){
+            return j;
+        }
+
+        if(j == 0){
+            return i;
+        }
+
+        if(stringCheckDp[i][j] != 1e9){
+            return stringCheckDp[i][j];
+        }
+
+        if(str1.charAt(i - 1) == str2.charAt(j - 1)){
+            return stringCheckDp[i][j] = stringComp(str1, str2, i-1, j-1);
+        }
+
+        int ans = (int)1e9;
+
+        //add
+        ans =  min(ans , stringComp(str1, str2, i, j-1) + 1);
+        // remove
+        ans = min(ans, stringComp(str1, str2, i-1, j) + 1);
+        //replace
+        ans = min(ans,stringComp(str1, str2, i-1, j- 1) + 1);
+
+        return stringCheckDp[i][j] = ans;
+
     }
 
     private void checkAnswer() {
@@ -72,18 +108,31 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(compString, correctAnswer);
 
-        correct = correctAnswer.equals(compString);
 
-        if(correct){
-            Toast.makeText(this,"Your answer is correct",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this,"Your answer is incorrect",Toast.LENGTH_LONG).show();
+        //String comparison using dp
+        stringCheckDp = new int[compString.length() + 1][correctAnswer.length() + 1];
+
+        for(int i = 0; i < compString.length() + 1; i++){
+            for(int j = 0; j < correctAnswer.length() + 1; j++){
+                stringCheckDp[i][j] = (int)1e9;
+            }
         }
 
-        skipAudio();
+        // finding the error percentage
+        double error =   stringComp(compString, correctAnswer, compString.length(), correctAnswer.length()) + 0.00;
+        double goodPercentage = 100.00 -  (error/correctAnswer.length()) * 100;
+
+        // rounding up to 2 decimal places
+        BigDecimal bd = new BigDecimal(goodPercentage).setScale(2, RoundingMode.HALF_UP);
+        goodPercentage = bd.doubleValue();
+
+        Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
+
+        if(goodPercentage==100) {
+            skipAudio();
+        }
         writingSpace.setText("");
     }
-
 
     private void getData() {
         audioList = new ArrayList<>();

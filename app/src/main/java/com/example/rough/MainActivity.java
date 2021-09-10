@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         BigDecimal bd = new BigDecimal(goodPercentage).setScale(2, RoundingMode.HALF_UP);
         goodPercentage = bd.doubleValue();
 
+        if(goodPercentage < 0){
+            goodPercentage = 0;
+        }
+
         Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
 
         if(goodPercentage==100) {

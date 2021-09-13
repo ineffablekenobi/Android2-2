@@ -178,7 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(m1 == null){
             try {
+                Log.d("play: ", "trying");
                 startMedia();
+                Log.d("play", "could play");
             }catch (IOException io){
                 Log.d("ExceptionLog: ", "StarMedia Calling time exception");
             }
@@ -195,9 +197,11 @@ public class MainActivity extends AppCompatActivity {
         pp.setImageResource(R.drawable.stop_foreground);
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             // linking the listener so it gets called after music is complete
+
             @Override
             public void onCompletion(MediaPlayer mp) {
                 //Log.d("Oncompletion", "is called");
+
                 stopMedia();
             }
         });

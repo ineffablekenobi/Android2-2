@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
 
-        if(goodPercentage==100) {
+        if(goodPercentage ==100) {
             skipAudio();
         }
         writingSpace.setText("");

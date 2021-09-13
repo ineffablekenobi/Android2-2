@@ -5,11 +5,13 @@ import static java.lang.Math.min;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
+
+
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer m1;
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Pro1");
         writingSpace = findViewById(R.id.writingspace);
+
+
 
         pp = findViewById(R.id.ppf);
         getData();

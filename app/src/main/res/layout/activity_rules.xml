@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".rules"
-    android:backgroundTint="@color/teal_700">
+    android:background="#9E2B2B"
+    android:backgroundTint="#29393C"
+    tools:context=".rules">
 
     <TextView
-        android:textColor="@color/white"
+        android:id="@+id/textView2"
         android:layout_width="411dp"
         android:layout_height="41dp"
         android:fontFamily="@font/press_start_2p"
         android:text="YOUR GAME MY RULES"
         android:textAlignment="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -30,11 +34,34 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="eta rule" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+
+                android:text="ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule ei khelar onek rule " />
+        </ScrollView>
 
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backtohome"
+        android:layout_width="59dp"
+        android:layout_height="61dp"
+        android:clickable="true"
+        android:foregroundGravity="center|center_horizontal"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 </androidx.constraintlayout.widget.ConstraintLayout>

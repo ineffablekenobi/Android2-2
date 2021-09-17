@@ -6,14 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +33,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int audioListSize = 4;
     private static int stringCheckDp[][];
 
+
+    //==========
+    ProgressBar audioProgress;//
+
+    //==========
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         pp = findViewById(R.id.ppf);
+        audioProgress = findViewById(R.id.audioProgress);
         getData();
 
     }
@@ -175,11 +185,13 @@ public class MainActivity extends AppCompatActivity {
     public void play(View v1){
         // the function is called from design
         // when you press the play button the function is a on click listener
-
+        audioProgress.setProgress(0);
+        Log.d("progress", "shit");
         if(m1 == null){
             try {
                 Log.d("play: ", "trying");
                 startMedia();
+               // progressWork();
                 Log.d("play", "could play");
             }catch (IOException io){
                 Log.d("ExceptionLog: ", "StarMedia Calling time exception");
@@ -189,12 +201,54 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void progressWork(int dur) {
+        Log.d("progresswork() : ", "doing progress");
+        final int duration = dur;//m1.getDuration();
+        final long progress = duration/100;
 
+        CountDownTimer audioTimer = new CountDownTimer(duration, progress) {
+            @Override
+            public void onTick(long l) {
+                Log.d("ontick: ", " boo");
+                if(true){//progress*audioProgress.getProgress() < 100) {
+
+                    int p = audioProgress.getProgress();
+                    p+=1;
+                    audioProgress.setProgress(p);
+                    Log.d("progress: " , String.valueOf(audioProgress.getProgress()));
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                audioProgress.setProgress(100);
+            }
+        }.start();
+
+//        Timer audioTimer = new Timer();
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                Log.d("inside run: ", " boo");
+//                if(progress*audioProgress.getProgress() < 100) {
+//
+//                    int p = audioProgress.getProgress();
+//                    p+=1;
+//                    audioProgress.setProgress(p);
+//                    Log.d("progress: " , String.valueOf(audioProgress.getProgress()));
+//                }
+//            }
+//        };
+//        audioTimer.schedule(timerTask, 0, progress);
+
+    }
     private void startMedia() throws IOException {
 
         m1 = new MediaPlayer();
         m1.setDataSource(audioList.get(this.sessionPlayIndex).getDataSource());
+
         pp.setImageResource(R.drawable.stop_foreground);
+
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             // linking the listener so it gets called after music is complete
 
@@ -209,7 +263,9 @@ public class MainActivity extends AppCompatActivity {
         m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                pp.setColorFilter(Color.argb(255, 3, 218, 197));
                 mp.start();
+                progressWork(mp.getDuration());
             }
         });
 
@@ -224,10 +280,14 @@ public class MainActivity extends AppCompatActivity {
             m1 = null;
         }
         pp.setImageResource(R.drawable.play_foreground);
+        pp.setColorFilter(Color.argb(255, 244, 67, 54));
+
     }
 
     public void skip(View view){
         skipAudio();
+        audioProgress.setProgress(0);
+        Toast.makeText(this, "Skipped!!", Toast.LENGTH_SHORT).show();
         writingSpace.setText("");
     }
 
@@ -235,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
         stopMedia();
         this.sessionPlayIndex++;
         this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
+        pp.setColorFilter(Color.argb(255, 3, 218, 197));
     }
 
     public void stop(View v2){

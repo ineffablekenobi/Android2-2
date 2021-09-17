@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Pro1");
         writingSpace = findViewById(R.id.writingspace);
 
-
-
         pp = (ImageButton) findViewById(R.id.ppf);
         audioProgress = (ProgressBar) findViewById(R.id.audioProgress);
         getData();
 
     }
+
+
 
     public void checkButton(View view){
         checkAnswer();

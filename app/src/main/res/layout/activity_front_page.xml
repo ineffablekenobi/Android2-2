@@ -38,25 +38,25 @@
             android:id="@+id/play"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="@string/play" />
+            android:text="Play" />
 
         <Button
             android:id="@+id/rules"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="@string/rules" />
+            android:text="Rules" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/dev"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="@string/developers" />
+            android:text="Developers" />
 
         <Button
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="@string/exit" />
+            android:text="Exit" />
 
     </LinearLayout>
 
@@ -65,7 +65,7 @@
         android:layout_width="408dp"
         android:layout_height="61dp"
         android:fontFamily="@font/press_start_2p"
-        android:text="@string/uncalibrated"
+        android:text="uncalibrated"
         android:textAlignment="center"
         android:textSize="23sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"

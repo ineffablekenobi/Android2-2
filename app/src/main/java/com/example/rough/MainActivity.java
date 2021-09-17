@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     //==========
     ProgressBar audioProgress;//
-
+    CountDownTimer audioTimer;
     //==========
 
     @Override
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        pp = findViewById(R.id.ppf);
-        audioProgress = findViewById(R.id.audioProgress);
+        pp = (ImageButton) findViewById(R.id.ppf);
+        audioProgress = (ProgressBar) findViewById(R.id.audioProgress);
         getData();
 
     }
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(goodPercentage ==100) {
             skipAudio();
+            audioProgress.setProgress(0);
         }
         writingSpace.setText("");
     }
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         final int duration = dur;//m1.getDuration();
         final long progress = duration/100;
 
-        CountDownTimer audioTimer = new CountDownTimer(duration, progress) {
+        audioTimer = new CountDownTimer(duration, progress) {
             @Override
             public void onTick(long l) {
                 Log.d("ontick: ", " boo");
@@ -263,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+
                 pp.setColorFilter(Color.argb(255, 3, 218, 197));
                 mp.start();
                 progressWork(mp.getDuration());
@@ -281,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
         }
         pp.setImageResource(R.drawable.play_foreground);
         pp.setColorFilter(Color.argb(255, 244, 67, 54));
+        audioTimer.cancel();
+        audioProgress.setProgress(0);
 
     }
 

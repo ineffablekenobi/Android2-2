@@ -6,14 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
     int sessionPlayIndex ;
     private static final int audioListSize = 4;
     private static int stringCheckDp[][];
-
+    //==========
+    ProgressBar audioProgress;//
+    CountDownTimer audioTimer;
+    //==========
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         writingSpace = findViewById(R.id.writingspace);
 
 
-
-        pp = findViewById(R.id.ppf);
+        audioProgress = (ProgressBar) findViewById(R.id.audioProgress);
+        pp = (ImageButton) findViewById(R.id.ppf);
         getData();
 
     }
@@ -189,7 +196,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void progressWork(int dur) {
+        Log.d("progresswork() : ", "doing progress");
+        final int duration = dur;//m1.getDuration();
+        final long progress = duration/100;
 
+        audioTimer = new CountDownTimer(duration, progress) {
+            @Override
+            public void onTick(long l) {
+                Log.d("ontick: ", " boo");
+                if(true){//progress*audioProgress.getProgress() < 100) {
+
+                    int p = audioProgress.getProgress();
+                    p+=1;
+                    audioProgress.setProgress(p);
+                    Log.d("progress: " , String.valueOf(audioProgress.getProgress()));
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                audioProgress.setProgress(100);
+            }
+        }.start();
+
+//        Timer audioTimer = new Timer();
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                Log.d("inside run: ", " boo");
+//                if(progress*audioProgress.getProgress() < 100) {
+//
+//                    int p = audioProgress.getProgress();
+//                    p+=1;
+//                    audioProgress.setProgress(p);
+//                    Log.d("progress: " , String.valueOf(audioProgress.getProgress()));
+//                }
+//            }
+//        };
+//        audioTimer.schedule(timerTask, 0, progress);
+
+    }
     private void startMedia() throws IOException {
 
         m1 = new MediaPlayer();
@@ -209,7 +256,11 @@ public class MainActivity extends AppCompatActivity {
         m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+
                 mp.start();
+                pp.setColorFilter(Color.argb(255, 1, 135, 134));
+                progressWork(mp.getDuration());
+
             }
         });
 
@@ -224,17 +275,24 @@ public class MainActivity extends AppCompatActivity {
             m1 = null;
         }
         pp.setImageResource(R.drawable.play_foreground);
+        pp.setColorFilter(Color.argb(255, 244, 67, 54));
+        audioTimer.cancel();
+        audioProgress.setProgress(0);
     }
 
     public void skip(View view){
         skipAudio();
         writingSpace.setText("");
+        audioProgress.setProgress(0);
+        Toast.makeText(this, "skipped!!", Toast.LENGTH_SHORT).show();
     }
 
     private void skipAudio(){
         stopMedia();
         this.sessionPlayIndex++;
         this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
+        pp.setColorFilter(Color.argb(255, 1, 135, 134));
+
     }
 
     public void stop(View v2){

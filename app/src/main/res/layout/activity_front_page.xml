@@ -8,9 +8,21 @@
     tools:context=".frontPage"
     android:theme="@style/Theme.AppCompat.NoActionBar">
 
+
+
+    <ImageView
+        android:id="@+id/homebg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@color/teal_700"
+        app:srcCompat="@drawable/homebg" />
+
+
     <LinearLayout
-        android:layout_width="216dp"
-        android:layout_height="340dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="259dp"
+        android:layout_height="196dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PLAY" />
+
         <Button
             android:id="@+id/rules"
             android:layout_width="match_parent"
@@ -31,9 +44,29 @@
             android:text="RULES" />
 
         <Button
+            android:id="@+id/Developers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developers" />
+
+        <Button
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Exit" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="uncalibrated"
+        android:textSize="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/homebg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

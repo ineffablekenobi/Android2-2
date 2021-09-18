@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.185"
         app:srcCompat="@drawable/play_foreground"
-        app:tint="#F44336" />
+        app:tint="@color/teal_700" />
 
     <Button
         android:id="@+id/checkanswerbtn"
@@ -68,5 +68,17 @@
         app:layout_constraintStart_toEndOf="@+id/writingspace"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.87" />
+
+    <ProgressBar
+        android:id="@+id/audioProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="212dp"
+        android:layout_height="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ppf"
+        app:layout_constraintVertical_bias="0.098" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

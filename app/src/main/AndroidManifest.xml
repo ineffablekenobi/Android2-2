@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rough">
-        <activity android:name=".rules"></activity>
+        <activity android:name=".rules" />
         <activity android:name=".MainActivity" />
         <activity android:name=".frontPage">
             <intent-filter>

@@ -1,5 +1,6 @@
 package com.example.rough;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,10 +15,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class frontPage extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,26 @@ public class frontPage extends AppCompatActivity {
         });
 
 
+        //mGoogleSignInClient = (GoogleSignInClient) getIntent().getExtras().get("Account");
+
+        findViewById(R.id.signout).setOnClickListener(V->signOut());
+
+
     }
 
+    private void signOut() {
+        continue_with_google.mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(frontPage.this, "Sign out completed", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(frontPage.this, continue_with_google.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+    }
 
 
 }

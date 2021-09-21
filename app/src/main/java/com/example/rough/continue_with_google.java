@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,7 @@ public class continue_with_google extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
     private GoogleSignInAccount account;
-    private GoogleSignInClient mGoogleSignInClient;
+    public static GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class continue_with_google extends AppCompatActivity {
             findViewById(R.id.signingooglebtn).setVisibility(View.INVISIBLE);
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, frontPage.class);
+
             startActivity(intent);
             finish();
         }

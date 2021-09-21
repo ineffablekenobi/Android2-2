@@ -4,36 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg1_foreground"
+    android:background="@color/white"
     tools:context=".continue_with_google">
-
-    <Button
-        android:id="@+id/signout"
-        android:layout_width="320dp"
-        android:layout_height="102dp"
-        android:background="#32FFFFFF"
-        android:text="Sign Out"
-        android:textSize="34sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
 
         android:id="@+id/signingooglebtn"
-        android:layout_width="320dp"
-        android:layout_height="102dp"
-        android:background="#17FFFFFF"
+
+        android:layout_width="339dp"
+        android:layout_height="84dp"
+        android:background="@drawable/roundforcontinue"
+        android:backgroundTint="#091CD1"
         android:drawableLeft="@drawable/googleg_standard_color_18"
         android:paddingLeft="20dp"
         android:text="Continue with google"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.582" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="211dp"
+        android:layout_height="134dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.097"
+        app:srcCompat="@mipmap/uncalibrated_foreground" />
+
+    <TextView
+        android:layout_width="173dp"
+        android:layout_height="73dp"
+        android:fontFamily="@font/coiny"
+        android:gravity="center|center_vertical"
+        android:text="SIGN IN "
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.092" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

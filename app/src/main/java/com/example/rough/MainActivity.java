@@ -304,10 +304,5 @@ public class MainActivity extends AppCompatActivity {
         stopMedia();
     }
 
-    @Override
-    public void onBackPressed() {
-        // no back pressing back button
-        //moveTaskToBack(true);
-    }
 
 }

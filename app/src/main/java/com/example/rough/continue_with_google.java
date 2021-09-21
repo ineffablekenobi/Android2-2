@@ -91,5 +91,4 @@ public class continue_with_google extends AppCompatActivity {
         }
     }
 
-
 }

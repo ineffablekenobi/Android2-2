@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22184508425932" />
+        <entry key="app/src/main/res/layout/activity_continue_with_google.xml" value="0.1539855072463768" />
+        <entry key="app/src/main/res/layout/activity_front_page.xml" value="0.2861425624011509" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1441878227724924" />
+        <entry key="app/src/main/res/layout/activity_rules.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26614583333333336" />
       </map>
     </option>

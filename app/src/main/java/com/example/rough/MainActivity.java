@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,12 +17,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rough.DTO.Audio;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,9 +36,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Audio> audioList;
     int sessionPlayIndex ;
     private static final int audioListSize = 4;
-    private static int stringCheckDp[][];
+    private static int[][] stringCheckDp;
     //==========
     ProgressBar audioProgress;//
     CountDownTimer audioTimer;
@@ -61,12 +62,16 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Pro1");
         writingSpace = findViewById(R.id.writingspace);
 
+        //Button signInWithGoogleBtn = findViewById(R.id.signinwithgoogle);
+
+        //signInWithGoogleBtn.setOnClickListener(V->signInWithGoogle());
 
         audioProgress = (ProgressBar) findViewById(R.id.audioProgress);
         pp = (ImageButton) findViewById(R.id.ppf);
         getData();
 
     }
+
 
     public void checkButton(View view){
         checkAnswer();
@@ -298,4 +303,11 @@ public class MainActivity extends AppCompatActivity {
     public void stop(View v2){
         stopMedia();
     }
+
+    @Override
+    public void onBackPressed() {
+        // no back pressing back button
+        //moveTaskToBack(true);
+    }
+
 }

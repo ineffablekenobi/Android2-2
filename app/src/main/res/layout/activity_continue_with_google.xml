@@ -22,8 +22,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/continuewithg"
 
+        android:id="@+id/signingooglebtn"
         android:layout_width="320dp"
         android:layout_height="102dp"
         android:background="#17FFFFFF"

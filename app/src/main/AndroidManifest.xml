@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rough">
+        <activity android:name=".frontPage"></activity>
         <activity android:name=".rules" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".frontPage">
+        <activity android:name=".continue_with_google">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPrepared(MediaPlayer mp) {
 
                 mp.start();
-                pp.setColorFilter(Color.argb(255, 26, 4, 66));
+                pp.setColorFilter(Color.argb(220, 46, 136, 26));
                 progressWork(mp.getDuration());
 
             }
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             m1 = null;
         }
         pp.setImageResource(R.drawable.play_foreground);
-        pp.setColorFilter(Color.argb(255, 102, 71, 74));
+        pp.setColorFilter(Color.argb(255, 253, 68, 11));
         audioTimer.cancel();
         audioProgress.setProgress(0);
     }
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
         stopMedia();
         this.sessionPlayIndex++;
         this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
-        pp.setColorFilter(Color.argb(255, 26, 4, 66));
+        pp.setColorFilter(Color.argb(255, 228, 178, 28));
 
     }
 

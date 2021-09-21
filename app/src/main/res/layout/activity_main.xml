@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8A70AA"
+    android:background="@mipmap/bg3_foreground"
     android:clickable="true"
     android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/writingspace"
-        android:layout_width="216dp"
-        android:layout_height="62dp"
+        android:scrollHorizontally="false"
+        android:layout_width="246dp"
+        android:layout_height="65dp"
+        android:background="@drawable/round_corner"
         android:ems="10"
         android:hint="Write "
         android:inputType="textPersonName"
+        android:paddingLeft="7dp"
         android:textColor="#EAE5E5"
         android:textColorHint="#F6EFEF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,21 +44,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.185"
         app:srcCompat="@drawable/play_foreground"
-        app:tint="#1A0442" />
+        app:tint="#E4B21C" />
 
     <Button
         android:id="@+id/checkanswerbtn"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#1A0442"
+        android:background="@drawable/round_corner"
+        android:backgroundTint="#ffE4B21C"
         android:onClick="checkButton"
         android:text="Check"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toEndOf="@+id/writingspace"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintVertical_bias="0.878" />
 
     <Button
         android:id="@+id/button4"
@@ -63,13 +68,14 @@
         android:layout_height="wrap_content"
         android:onClick="skip"
         android:text="SKIP"
-        app:backgroundTint="#1A0442"
+        app:backgroundTint="#ffE4B21C"
+        android:background="@drawable/round_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintVertical_bias="0.959" />
 
     <ProgressBar
         android:id="@+id/audioProgress"

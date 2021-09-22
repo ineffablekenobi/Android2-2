@@ -4,29 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg3_foreground"
+    android:background="@mipmap/main_foreground"
     android:clickable="true"
     android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/writingspace"
-        android:scrollHorizontally="false"
-        android:layout_width="246dp"
-        android:layout_height="65dp"
+        android:layout_width="356dp"
+        android:layout_height="66dp"
         android:background="@drawable/round_corner"
         android:ems="10"
         android:hint="Write "
         android:inputType="textPersonName"
-        android:paddingLeft="7dp"
-        android:textColor="#EAE5E5"
-        android:textColorHint="#F6EFEF"
+        android:paddingLeft="15dp"
+        android:scrollHorizontally="false"
+        android:textColor="#040404"
+        android:textColorHint="#070707"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.807" />
 
     <ImageButton
 
@@ -51,28 +52,29 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
         android:background="@drawable/round_corner"
-        android:backgroundTint="#ffE4B21C"
+        android:backgroundTint="#E4B21C"
         android:onClick="checkButton"
         android:text="Check"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.698"
-        app:layout_constraintStart_toEndOf="@+id/writingspace"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.959" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_corner"
         android:onClick="skip"
         android:text="SKIP"
-        app:backgroundTint="#ffE4B21C"
-        android:background="@drawable/round_corner"
+        app:backgroundTint="#4C3A6E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959" />

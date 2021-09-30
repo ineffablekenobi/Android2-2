@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/app_logo_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rough">
-        <activity android:name=".frontPage"></activity>
+        <activity android:name=".YourScore"></activity>
+        <activity android:name=".frontPage" />
         <activity android:name=".rules" />
         <activity android:name=".MainActivity" />
         <activity android:name=".continue_with_google">

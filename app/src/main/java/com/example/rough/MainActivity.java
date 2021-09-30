@@ -7,16 +7,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rough.DTO.Audio;
@@ -36,6 +41,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +57,12 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar audioProgress;//
     CountDownTimer audioTimer;
     //==========
-
+    TextView tv321, serial;
+    Animation fadeOut;
+    Button checkBtn, skipBtn;
+    //=========
+    int playLimit = 2;
+    int checkLimit = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // when you start the app this function is executed
@@ -68,13 +79,35 @@ public class MainActivity extends AppCompatActivity {
 
         audioProgress = (ProgressBar) findViewById(R.id.audioProgress);
         pp = (ImageButton) findViewById(R.id.ppf);
+        tv321 = (TextView) findViewById(R.id.tv321);
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        checkBtn = (Button) findViewById(R.id.checkanswerbtn);
+        skipBtn = (Button) findViewById(R.id.skipbtn);
+        serial = (TextView) findViewById(R.id.serial);
+
+        serial.setText("Audio " + String.valueOf(sessionPlayIndex));
+
         getData();
+
 
     }
 
 
     public void checkButton(View view){
-        checkAnswer();
+
+        if(checkLimit > 0) {
+            checkLimit--;
+            checkAnswer();
+
+        }
+
+        if(checkLimit == 0) {
+            checkBtn.setVisibility(View.GONE);
+            skipBtn.setText("Next");
+        }
+
+
+
     }
 
     private int stringComp(String str1, String str2, int i, int j){
@@ -184,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void play(View v1){
+    public void play(){
         // the function is called from design
         // when you press the play button the function is a on click listener
 
@@ -255,6 +288,10 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("Oncompletion", "is called");
 
                 stopMedia();
+                if(playLimit > 0 && !pp.isClickable()) {
+                    setPlayBtnDisabled(false); //play btn is now enable(clickable)
+
+                }
             }
         });
 
@@ -287,15 +324,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void skip(View view){
         skipAudio();
+
         writingSpace.setText("");
         audioProgress.setProgress(0);
-        Toast.makeText(this, "skipped!!", Toast.LENGTH_SHORT).show();
-    }
+        if(playLimit == 0 || checkLimit == 0 ) Toast.makeText(this, "Next Audio", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "skipped ", Toast.LENGTH_SHORT).show();
 
+    }
+    private void checkEndOfList() {
+        if(sessionPlayIndex == 0) {
+            startActivity(new Intent(this, YourScore.class));
+
+        }
+    }
     private void skipAudio(){
+
+        checkLimit = 2; //reset check limit
+        playLimit = 2; //reset play limit
+        checkBtn.setVisibility(View.VISIBLE);
+        setPlayBtnDisabled(false);
+        skipBtn.setText("Skip");
         stopMedia();
         this.sessionPlayIndex++;
         this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
+
+        checkEndOfList();
+
+        serial.setText("Audio " + String.valueOf(sessionPlayIndex));
         pp.setColorFilter(Color.argb(255, 228, 178, 28));
 
     }
@@ -303,6 +358,63 @@ public class MainActivity extends AppCompatActivity {
     public void stop(View v2){
         stopMedia();
     }
+
+    public void setPlayBtnDisabled(boolean disable) {
+        if(disable) {
+            pp.setClickable(false);
+            pp.setBackgroundResource(R.drawable.circle);
+        }
+        else {
+            pp.setClickable(true);
+            pp.setBackgroundResource(R.drawable.presseffect);
+        }
+    }
+    // countdown 3 2 1 before playing audio
+    public void playAudio321(View v1) {
+        playLimit--;
+        setPlayBtnDisabled(true);
+        skipBtn.setClickable(false);
+
+        skipBtn.setText(".....");
+        //tv321.setText("3");
+        tv321.setVisibility(View.VISIBLE);
+        Log.d("init play", "starting playAudio321");
+        final Handler handler = new Handler();
+
+        Log.d("init play", "handler & tv placed");
+        final java.util.concurrent.atomic.AtomicInteger n = new AtomicInteger(3);
+
+        final Runnable counter = new Runnable() {
+            @Override
+            public void run() {
+
+                Log.d("loading", "runn");
+                tv321.setText(Integer.toString(n.get()));
+                if (n.getAndDecrement() >= 1) {
+                    tv321.startAnimation(fadeOut);
+
+
+                    handler.postDelayed(this, 1000);
+                }
+                else {
+                    Log.d("loading" , "end");
+                    tv321.setVisibility(View.GONE);
+                    skipBtn.setClickable(true);
+                    if(playLimit != 0) {
+                        skipBtn.setText("Skip");
+                    }
+                    else {
+                        skipBtn.setText("Next");
+                    }
+                    // start the game
+                    play();
+                }
+            }
+        };
+
+        handler.postDelayed(counter, 1000);
+    }
+
 
 
 }

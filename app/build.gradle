@@ -43,5 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "com.github.sakshampruthi:custom-loading-screen:1.16"
+    implementation "com.airbnb.android:lottie:4.1.0"
 
 }

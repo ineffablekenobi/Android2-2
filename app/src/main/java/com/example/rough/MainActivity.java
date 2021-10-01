@@ -5,6 +5,8 @@ import static java.lang.Math.min;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -24,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.rough.DTO.Audio;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     //=========
     int playLimit = 2;
     int checkLimit = 2;
+    LottieAnimationView animView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // when you start the app this function is executed
@@ -70,7 +75,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.sessionPlayIndex = 0;
         setContentView(R.layout.activity_main);
-        setTitle("Pro1");
+        //================loading screen
+        animView = (LottieAnimationView) findViewById(R.id.animationView);
+
+
+
+
+
+        //==================================
         writingSpace = findViewById(R.id.writingspace);
 
         //Button signInWithGoogleBtn = findViewById(R.id.signinwithgoogle);
@@ -86,17 +98,31 @@ public class MainActivity extends AppCompatActivity {
         serial = (TextView) findViewById(R.id.serial);
 
         serial.setText("Audio " + String.valueOf(sessionPlayIndex));
-
+        flex();
         getData();
 
 
     }
 
+    private void flex() {
+        new CountDownTimer(5000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                loadGame();
+            }
+
+        }.start();
+    }
+
 
     public void checkButton(View view){
 
+
         if(checkLimit > 0) {
-            checkLimit--;
             checkAnswer();
 
         }
@@ -188,10 +214,15 @@ public class MainActivity extends AppCompatActivity {
         }
         writingSpace.setText("");
     }
-
+    private void loadGame() {
+        animView.clearAnimation();
+        animView.setVisibility(View.GONE);
+        checkBtn.setVisibility(View.VISIBLE);
+        skipBtn.setVisibility(View.VISIBLE);
+    }
     private void getData() {
         audioList = new ArrayList<>();
-
+        Log.d("delay ", "starting getData");
         for(int i  = 0; i < audioListSize; i++) {
             reference = FirebaseFirestore.getInstance().collection("Audio").document(i+"");
             reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -212,6 +243,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("this doesnt work", "GG");
                 }
             });
+
+            Log.d("delay" , "done fetching data");
+
+            //loadGame();
         }
 
 

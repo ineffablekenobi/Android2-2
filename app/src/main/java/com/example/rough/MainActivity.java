@@ -123,12 +123,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(checkLimit > 0) {
+            Log.d("bug", String.valueOf(checkLimit));
+            checkLimit--;
             checkAnswer();
 
         }
 
         if(checkLimit == 0) {
             checkBtn.setVisibility(View.GONE);
+            setPlayBtnDisabled(true);
+            playLimit = 0;
             skipBtn.setText("Next");
         }
 
@@ -350,14 +354,16 @@ public class MainActivity extends AppCompatActivity {
         if(m1 != null) {
             m1.release();
             m1 = null;
+
+            pp.setImageResource(R.drawable.play_foreground);
+            pp.setColorFilter(Color.argb(255, 253, 68, 11));
+            audioTimer.cancel();
+            audioProgress.setProgress(0);
         }
-        pp.setImageResource(R.drawable.play_foreground);
-        pp.setColorFilter(Color.argb(255, 253, 68, 11));
-        audioTimer.cancel();
-        audioProgress.setProgress(0);
     }
 
     public void skip(View view){
+        Log.d("buggy", "clicked skip");
         skipAudio();
 
         writingSpace.setText("");
@@ -367,25 +373,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void checkEndOfList() {
-        if(sessionPlayIndex == 0) {
+        if(sessionPlayIndex == audioListSize - 1) {
             startActivity(new Intent(this, YourScore.class));
+            serial.setText("Audio " + String.valueOf(sessionPlayIndex));
 
         }
     }
     private void skipAudio(){
-
+        Log.d("buggy", "skipaudio");
         checkLimit = 2; //reset check limit
         playLimit = 2; //reset play limit
         checkBtn.setVisibility(View.VISIBLE);
         setPlayBtnDisabled(false);
         skipBtn.setText("Skip");
+
+
+        checkEndOfList();
+
+
         stopMedia();
         this.sessionPlayIndex++;
         this.sessionPlayIndex = this.sessionPlayIndex % audioListSize;
 
-        checkEndOfList();
 
-        serial.setText("Audio " + String.valueOf(sessionPlayIndex));
+
+        if(sessionPlayIndex != 0) serial.setText("Audio " + String.valueOf(sessionPlayIndex));
         pp.setColorFilter(Color.argb(255, 228, 178, 28));
 
     }

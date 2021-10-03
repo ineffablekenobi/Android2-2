@@ -4,80 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".frontPage"
+    android:background="@color/white"
     android:theme="@style/Theme.AppCompat.NoActionBar">
 
-
-    <ImageView
-        android:id="@+id/homebg"
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#64647C"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/homebg" />
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/bg2" />
 
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="259dp"
-        android:layout_height="196dp"
+        android:layout_width="271dp"
+        android:layout_height="234dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.396">
+        app:layout_constraintVertical_bias="0.46">
 
         <Button
             android:id="@+id/play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PLAY" />
+            android:background="@drawable/transparent"
+            android:fontFamily="@font/coiny"
+            android:text="PLAY"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <Button
             android:id="@+id/rules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RULES" />
+            android:background="@drawable/transparent"
+            android:fontFamily="@font/coiny"
+            android:text="RULES"
+            android:textColor="#050505"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <Button
             android:id="@+id/Developers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developers" />
+            android:background="@drawable/transparent"
+            android:fontFamily="@font/coiny"
+            android:text="Developers"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <Button
             android:id="@+id/exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exit" />
+            android:background="@drawable/transparent"
+            android:fontFamily="@font/coiny"
+            android:text="Exit"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="267dp"
-        android:layout_height="53dp"
+        android:layout_width="290dp"
+        android:layout_height="84dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/press_start_2p"
-        android:text="uncalibrated"
-        android:textSize="21dp"
+        android:text="Uncalibrated"
+        android:textColor="#050505"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/homebg"
-        app:layout_constraintVertical_bias="0.459" />
-
-    <Button
-        android:id="@+id/signout"
-        android:layout_width="131dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="204dp"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

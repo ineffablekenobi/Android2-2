@@ -9,7 +9,6 @@
     android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context=".MainActivity">
 
-
     <EditText
         android:id="@+id/writingspace"
         android:layout_width="356dp"
@@ -139,5 +138,19 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading_cat_scratch" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingtext"
+        android:layout_width="381dp"
+        android:layout_height="109dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.842"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loadingtext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

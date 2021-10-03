@@ -59,7 +59,7 @@ public class frontPage extends AppCompatActivity {
 
         //mGoogleSignInClient = (GoogleSignInClient) getIntent().getExtras().get("Account");
 
-        findViewById(R.id.signout).setOnClickListener(V->signOut());
+        //findViewById(R.id.signout).setOnClickListener(V->signOut());
 
 
     }

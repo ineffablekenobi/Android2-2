@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     int playLimit = 2;
     int checkLimit = 2;
     LottieAnimationView animView;
+    LottieAnimationView loadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //================loading screen
         animView = (LottieAnimationView) findViewById(R.id.animationView);
-
-
+        loadingView = (LottieAnimationView) findViewById(R.id.loadingtext);
 
 
 
@@ -220,6 +220,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadGame() {
         animView.clearAnimation();
+        loadingView.clearAnimation();
+        loadingView.setVisibility(View.GONE);
         animView.setVisibility(View.GONE);
         checkBtn.setVisibility(View.VISIBLE);
         skipBtn.setVisibility(View.VISIBLE);

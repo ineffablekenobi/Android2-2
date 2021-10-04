@@ -20,9 +20,8 @@ import com.google.android.gms.tasks.Task;
 public class continue_with_google extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
-    private static GoogleSignInAccount account;
+    public static GoogleSignInAccount account;
     public static GoogleSignInClient mGoogleSignInClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +29,7 @@ public class continue_with_google extends AppCompatActivity {
         setContentView(R.layout.activity_continue_with_google);
         createLoginRequest();
     }
+
 
     private void createLoginRequest() {
 

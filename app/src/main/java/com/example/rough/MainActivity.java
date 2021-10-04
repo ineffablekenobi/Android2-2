@@ -219,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
 
         if(goodPercentage >= 80) {
+            //score count
+            //change according to rules
             goodPercentage -= (maxPlayLimit - playLimit) * 10;
             goodPercentage -= (maxCheckLimit - checkLimit) * 15;
             score += (int)goodPercentage;

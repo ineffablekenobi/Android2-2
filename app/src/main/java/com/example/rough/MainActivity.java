@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     DocumentReference reference;
     ArrayList<Audio> audioList;
     int sessionPlayIndex ;
-    private static final int audioListSize = 4;
+    private static final int audioListSize = 15;
     private static int[][] stringCheckDp;
 
     //==========
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         checkBtn = (Button) findViewById(R.id.checkanswerbtn);
         skipBtn = (Button) findViewById(R.id.skipbtn);
         serial = (TextView) findViewById(R.id.serial);
-
+        score = 0;
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
         flex();
         getData();
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             goodPercentage = 0;
         }
 
-        Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
 
         if(goodPercentage >= 80) {
             //score count
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             score += (int)goodPercentage;
             skipAudio();
         }
-
+        Toast.makeText(this, "You've got " + String.valueOf(((int)goodPercentage)) + " points (Total: " + String.valueOf(score) + " )", Toast.LENGTH_SHORT).show();
         writingSpace.setText("");
     }
     private void loadGame() {
@@ -390,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void checkEndOfList() {
         if(sessionPlayIndex == audioListSize - 1) {
+            finish();
             startActivity(new Intent(this, YourScore.class));
             serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
 

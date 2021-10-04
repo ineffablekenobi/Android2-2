@@ -39,6 +39,9 @@ public class frontPage extends AppCompatActivity {
         //======
         Button rules = findViewById(R.id.rules);
         Intent rulesIntent = new Intent(this, rules.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("startUp", "no");
+        rulesIntent.putExtras(bundle);
 
         rules.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,3 +1,52 @@
 <resources>
     <string name="app_name">uncalibrated</string>
+    <string name="rulestext">
+
+package com.example.rough;\n
+\n
+import androidx.appcompat.app.AppCompatActivity;\n
+\n
+import android.content.Intent;\n
+import android.os.Bundle;\n
+import android.view.View;\n
+import android.widget.Button;\n
+import android.widget.TextView;\n
+\n
+import org.w3c.dom.Text;\n
+\n
+public class rules extends AppCompatActivity {\n
+\n
+private Button next;\n
+private String startUp;\n
+private TextView rulesText;\n
+\n
+@Override\n
+protected void onCreate(Bundle savedInstanceState) {\n
+super.onCreate(savedInstanceState);\n
+setContentView(R.layout.activity_rules);\n
+\n
+next = (Button) findViewById(R.id.next);\n
+rulesText =  (TextView) findViewById(R.id.rulesText);\n
+\n
+rulesText.setText(\"onek rules\");\n
+\n
+startUp = getIntent().getExtras().getString(\"startUp\");\n
+if(startUp.equals(\"yes\")) {\n
+next.setVisibility(View.VISIBLE);\n
+}\n
+else if(startUp.equals(\"no\")) {\n
+next.setVisibility(View.GONE);\n
+}\n
+\n
+next.setOnClickListener(new View.OnClickListener() {\n
+@Override\n
+public void onClick(View v) {\n
+finish();\n
+startActivity(new Intent(getApplicationContext(), frontPage.class));\n
+}\n
+});\n
+}\n
+}
+
+    </string>
 </resources>

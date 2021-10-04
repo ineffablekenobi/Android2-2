@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.rough.DTO.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +21,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class YourScore extends AppCompatActivity {
 
+    ////
+    private TextView yourscore , score ;
+    int scores ;
+    //////
     private String userID;
     private static  User user;
 
@@ -26,11 +32,35 @@ public class YourScore extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_score);
+
+        score = (TextView) findViewById(R.id.score) ;
+        yourscore = (TextView) findViewById(R.id.gameOver_title) ;
+        flex();
+
         putData();
     }
 
+    ///////////////////
+    private void flex() {
+        new CountDownTimer(2500, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                //loadGame();
+                yourscore.setText("Your Score");
+                score.setText(String.valueOf(scores));
+            }
+
+        }.start();
+    }
+    //////////////////
+
+
     public void putData(){
-        int scores = MainActivity.score;
+        scores = MainActivity.score;
 
         userID = continue_with_google.account.getId();
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();

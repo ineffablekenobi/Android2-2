@@ -87,18 +87,17 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="290dp"
-        android:layout_height="84dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/press_start_2p"
-        android:text="Uncalibrated"
-        android:textColor="#050505"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+    <ImageView
+
+        android:id="@+id/logo"
+        android:layout_width="271dp"
+        android:layout_height="232dp"
+        android:layout_marginTop="4dp"
+        android:background="@mipmap/uncalibrated_foreground"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

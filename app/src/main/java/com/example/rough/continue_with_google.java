@@ -54,7 +54,11 @@ public class continue_with_google extends AppCompatActivity {
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, frontPage.class);
 
-            startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putString("startUp", "yes");
+
+            startActivity(new Intent(getApplicationContext(), rules.class).putExtras(bundle));
+            //startActivity(intent);
             finish();
         }
     }

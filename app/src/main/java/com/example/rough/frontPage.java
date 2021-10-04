@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class frontPage extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +38,19 @@ public class frontPage extends AppCompatActivity {
         });
 
         //======
+        Button leaderBoard = (Button) findViewById(R.id.leaderboard);
         Button rules = findViewById(R.id.rules);
         Intent rulesIntent = new Intent(this, rules.class);
         Bundle bundle = new Bundle();
         bundle.putString("startUp", "no");
         rulesIntent.putExtras(bundle);
+
+        leaderBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Leaderboard.class));
+            }
+        });
 
         rules.setOnClickListener(new View.OnClickListener() {
             @Override

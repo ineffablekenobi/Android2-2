@@ -61,12 +61,12 @@
             android:layout_height="10dp" />
 
         <Button
-            android:id="@+id/Developers"
+            android:id="@+id/leaderboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/transparent"
             android:fontFamily="@font/coiny"
-            android:text="Developers"
+            android:text="Leaderboard"
             android:textColor="#000000"
             android:textSize="20sp" />
 

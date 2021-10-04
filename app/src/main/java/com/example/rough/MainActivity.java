@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     int sessionPlayIndex ;
     private static final int audioListSize = 4;
     private static int[][] stringCheckDp;
+
     //==========
     ProgressBar audioProgress;//
     CountDownTimer audioTimer;
@@ -64,10 +65,14 @@ public class MainActivity extends AppCompatActivity {
     Animation fadeOut;
     Button checkBtn, skipBtn;
     //=========
-    int playLimit = 2;
-    int checkLimit = 2;
+    private final int maxPlayLimit = 2;
+    int playLimit = maxPlayLimit;
+    private final int maxCheckLimit = 2;
+    int checkLimit = maxCheckLimit;
     LottieAnimationView animView;
     LottieAnimationView loadingView;
+
+    public static int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         skipBtn = (Button) findViewById(R.id.skipbtn);
         serial = (TextView) findViewById(R.id.serial);
 
-        serial.setText("Audio " + String.valueOf(sessionPlayIndex));
+        serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
         flex();
         getData();
 
@@ -213,9 +218,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Your answer is " + goodPercentage +"% correct", Toast.LENGTH_LONG).show();
 
-        if(goodPercentage ==100) {
+        if(goodPercentage >= 80) {
+            goodPercentage -= (maxPlayLimit - playLimit) * 10;
+            goodPercentage -= (maxCheckLimit - checkLimit) * 15;
+            score += (int)goodPercentage;
             skipAudio();
         }
+
         writingSpace.setText("");
     }
     private void loadGame() {
@@ -316,6 +325,9 @@ public class MainActivity extends AppCompatActivity {
 //        audioTimer.schedule(timerTask, 0, progress);
 
     }
+
+
+
     private void startMedia() throws IOException {
 
         m1 = new MediaPlayer();
@@ -377,14 +389,14 @@ public class MainActivity extends AppCompatActivity {
     private void checkEndOfList() {
         if(sessionPlayIndex == audioListSize - 1) {
             startActivity(new Intent(this, YourScore.class));
-            serial.setText("Audio " + String.valueOf(sessionPlayIndex));
+            serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
 
         }
     }
     private void skipAudio(){
-        Log.d("buggy", "skipaudio");
-        checkLimit = 2; //reset check limit
-        playLimit = 2; //reset play limit
+        //Log.d("buggy", "skipaudio");
+        checkLimit = maxCheckLimit; //reset check limit
+        playLimit = maxPlayLimit; //reset play limit
         checkBtn.setVisibility(View.VISIBLE);
         setPlayBtnDisabled(false);
         skipBtn.setText("Skip");
@@ -399,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(sessionPlayIndex != 0) serial.setText("Audio " + String.valueOf(sessionPlayIndex));
+        if(sessionPlayIndex != 0) serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
         pp.setColorFilter(Color.argb(255, 228, 178, 28));
 
     }

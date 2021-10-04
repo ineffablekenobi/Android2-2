@@ -20,8 +20,9 @@ import com.google.android.gms.tasks.Task;
 public class continue_with_google extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
-    private GoogleSignInAccount account;
+    private static GoogleSignInAccount account;
     public static GoogleSignInClient mGoogleSignInClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

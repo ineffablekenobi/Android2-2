@@ -49,10 +49,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Runnable{
     MediaPlayer m1;
     MediaPlayer m2;
     ImageButton pp;
@@ -90,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         // pause feature is removed
         super.onCreate(savedInstanceState);
         this.sessionPlayIndex = 0;
+        m2 = new MediaPlayer();
+        try {
+            m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
+            m2.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         getData();
 
@@ -117,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         serial = (TextView) findViewById(R.id.serial);
         score = 0;
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
-        m2 = new MediaPlayer();
         flex();
 
 
@@ -139,29 +146,6 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void randomizeSkipSound(){
-        m2 = new MediaPlayer();
-
-
-        if(skipSoundSources.size() == 0){
-            try {
-                m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
-                m2.prepare();
-            } catch (IOException e) {
-                Log.d("DATA SOURCE FAILED: ", e.toString());
-            }
-        }else {
-
-            SecureRandom random = new SecureRandom();
-            int index = random.nextInt() % skipSoundSources.size();
-            try {
-                m2.setDataSource(skipSoundSources.get(index));
-                m2.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
     public void checkButton(View view){
@@ -438,21 +422,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void skip(View view){
-        randomizeSkipSound();
-        m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                m2.start();
-            }
-        });
-        Log.d("buggy", "clicked skip");
-        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                m2 = null;
-            }
-        });
+
+
+        if(sessionPlayIndex != audioListSize) {
+            Thread thread = new Thread(new MainActivity());
+            thread.start();
+        }
         skipAudio();
 
         writingSpace.setText("");
@@ -553,5 +528,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void run() {
+        m2 = new MediaPlayer();
+        try {
+            m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
+            m2.prepare();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
+        m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+
+        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+                m2 = null;
+            }
+        });
+
+
+
+    }
 }

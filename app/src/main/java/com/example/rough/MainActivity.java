@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -12,9 +13,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +28,8 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.rough.DTO.Audio;
+import com.example.rough.Services.CheckTrackService;
+import com.example.rough.Services.MediaPlayerLoaderService;
 import com.example.rough.Services.SkipTrackService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,7 +49,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class MainActivity extends AppCompatActivity implements Runnable{
+public class MainActivity extends AppCompatActivity{
     MediaPlayer m1;
     MediaPlayer m2;
     ImageButton pp;
@@ -51,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     DocumentReference reference;
     FirebaseFirestore db;
     ArrayList<Audio> audioList;
+
+    //Services
+    SkipTrackService skipTrackService;
+    MediaPlayerLoaderService mediaPlayerLoaderService;
+    Audio currentAudio;
+
     int sessionPlayIndex ;
     int skipSoundIndex;
     private static final int audioListSize = 15;
@@ -75,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
     public static int score = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // when you start the app this function is executed
@@ -84,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         m2 = new MediaPlayer();
         try {
             m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
-            m2.prepare();
+            m2.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,6 +131,14 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
         flex();
 
+
+        writingSpace.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(MainActivity.this, "Listen First", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
     }
 
@@ -154,6 +176,11 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             playLimit = 0;
             skipBtn.setText("Next");
         }
+
+        // added dependency requires api 23 minimum
+        // so it might compile now but be aware
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
 
@@ -196,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
         int p = 0;
         answer = answer.toLowerCase();
-        String correctAnswer = audioList.get(this.sessionPlayIndex).getValidAnswer();
+        String correctAnswer = currentAudio.getValidAnswer();
         boolean correct = true;
         String compString = "";
         for(int i = 0; i < answer.length(); i++){
@@ -206,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         }
 
 
-        Log.d(compString, correctAnswer);
+        Log.d("Answer Comparison : " + compString, correctAnswer);
 
 
         //String comparison using dp
@@ -235,6 +262,14 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         if(goodPercentage >= 80) {
             //score count
             //change according to rules
+            if(goodPercentage == 100){
+                Thread t1 = new Thread(new CheckTrackService());
+                t1.start();
+
+            }
+
+
+
             goodPercentage -= (maxPlayLimit - playLimit - 1) * 10;
             goodPercentage -= (maxCheckLimit - checkLimit - 1) * 15;
             score += (int)goodPercentage;
@@ -255,17 +290,23 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     private void getData() {
         audioList = new ArrayList<>();
         skipSoundSources = new ArrayList<>();
+
         for(int i  = 0; i < audioListSize; i++) {
             reference = FirebaseFirestore.getInstance().collection("Audio").document(i+"");
+
             reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     if(documentSnapshot.exists()){
                         String validAnswer = documentSnapshot.getString("ValidAnswer");
                         String dataSource = documentSnapshot.getString("DataSource");
-
                         audioList.add(new Audio(validAnswer,dataSource));
-                    }else{
+                        if(audioList.size() == audioListSize) {
+                            mediaPlayerLoaderService = new MediaPlayerLoaderService(audioList);
+                            Thread mediaLoader = new Thread(mediaPlayerLoaderService);
+                            mediaLoader.start();
+                        }
+                        }else{
                         Log.d("this doesnt work", "GG");
                     }
                 }
@@ -278,8 +319,11 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
             Log.d("delay" , "done fetching data");
 
+
             //loadGame();
         }
+
+
 
         db = FirebaseFirestore.getInstance();
         //processLeaderBoard();
@@ -300,6 +344,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
                 }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                initializePlaySkipTrack();
                 Log.d("String Array SIZE ", skipSoundSources.size() + "" );
             }
         });
@@ -366,9 +411,23 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
     private void startMedia() throws IOException {
 
-        m1 = new MediaPlayer();
-        m1.setDataSource(audioList.get(this.sessionPlayIndex).getDataSource());
+        m1 = mediaPlayerLoaderService.getMediaPlayer();
+        currentAudio = mediaPlayerLoaderService.getCurrentAudio();
+        m1.start();
+
+
+
+        writingSpace.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
         pp.setImageResource(R.drawable.stop_foreground);
+        pp.setColorFilter(Color.argb(220, 46, 136, 26));
+        progressWork(m1.getDuration());
+
         m1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             // linking the listener so it gets called after music is complete
 
@@ -384,19 +443,6 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             }
         });
 
-        m1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-
-                mp.start();
-                pp.setColorFilter(Color.argb(220, 46, 136, 26));
-                progressWork(mp.getDuration());
-
-            }
-        });
-
-        m1.prepare();
-
     }
 
     private void stopMedia() {
@@ -404,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         if(m1 != null) {
             m1.release();
             m1 = null;
-
             pp.setImageResource(R.drawable.play_foreground);
             pp.setColorFilter(Color.argb(255, 253, 68, 11));
             audioTimer.cancel();
@@ -412,18 +457,15 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         }
     }
 
-    public void playSkipTrack(){
-        String dataSource = "https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3";
-        if(skipSoundSources != null && skipSoundSources.size() != 0){
-            int index = Math.abs((new SecureRandom()).nextInt())%skipSoundSources.size();
-            dataSource = skipSoundSources.get(index);
-        }
-        Thread thread = new Thread(new SkipTrackService(dataSource));
-        thread.start();
+    public void initializePlaySkipTrack(){
+        // This function is called to load the tracks from checkTrackService
+        skipTrackService = new SkipTrackService(skipSoundSources);
+        Thread trackLoader = new Thread(skipTrackService);
+        trackLoader.start();
     }
 
     public void skip(View view)  {
-        playSkipTrack();
+        skipTrackService.playSound();
         skipAudio();
 
         writingSpace.setText("");
@@ -441,6 +483,14 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         }
     }
     private void skipAudio(){
+
+        writingSpace.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(MainActivity.this, "Listen First", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         //Log.d("buggy", "skipaudio");
         checkLimit = maxCheckLimit; //reset check limit
         playLimit = maxPlayLimit; //reset play limit
@@ -524,35 +574,4 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     }
 
 
-    @Override
-    public void run() {
-
-        m2 = new MediaPlayer();
-        try {
-            m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
-            m2.prepare();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-        m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-                //skipBtn.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                m2 = null;
-                //skipBtn.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-
-    }
 }

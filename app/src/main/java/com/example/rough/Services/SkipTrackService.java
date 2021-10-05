@@ -1,5 +1,6 @@
 package com.example.rough.Services;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -13,43 +14,58 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class SkipTrackService implements Runnable {
-    private MediaPlayer m2;
+    public ArrayList<MediaPlayer> mediaPlayers;
+    private ArrayList<String> skipSoundSources;
     private String dataSource;
 
-    public SkipTrackService(String dataSource) {
-        this.dataSource = dataSource;
+    public SkipTrackService(ArrayList<String> skipSoundSources) {
+        mediaPlayers = new ArrayList<>();
+        this.skipSoundSources = skipSoundSources;
     }
 
 
     @Override
     public void run() {
-        m2 = new MediaPlayer();
-        try {
-            m2.setDataSource(dataSource);
-            m2.prepare();
-        } catch (IOException e){
-            e.printStackTrace();
+
+        for(int i = 0; i < skipSoundSources.size(); i++) {
+            dataSource = skipSoundSources.get(i);
+            MediaPlayer m2 = new MediaPlayer();
+            m2.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            try {
+                m2.setDataSource(dataSource);
+                m2.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayers.add(m2);
+                    //skipBtn.setVisibility(View.INVISIBLE);
+                }
+            });
         }
 
-        m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-                //skipBtn.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                m2 = null;
-                //skipBtn.setVisibility(View.VISIBLE);
-            }
-        });
-
     }
+
+    public  void playSound(){
+        int index = 0;
+        if(skipSoundSources != null && skipSoundSources.size() != 0){
+            index = Math.abs((new SecureRandom()).nextInt())%skipSoundSources.size();
+            MediaPlayer mediaPlayer = mediaPlayers.get(index);
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.seekTo(1);
+                }
+            });
+        }
+    }
+
 }

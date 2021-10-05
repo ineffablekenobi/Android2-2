@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent"
+    android:padding="4dp"
+    android:backgroundTint="#ff1313">
+
+    <TextView
+        android:id="@+id/player"
+        android:layout_width="248dp"
+        android:layout_height="50dp"
+        android:background="#D8CCCC"
+        android:backgroundTint="#D8CCCC"
+        android:fontFamily="@font/coiny"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="12dp"
+        android:text="Player"
+        android:textAlignment="gravity"
+        android:textColor="#344891"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="233dp"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@+id/player"
+        android:background="#D8CCCC"
+        android:backgroundTint="#D8CCCC"
+        android:fontFamily="@font/coiny"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="12dp"
+        android:text="150"
+        android:textAlignment="gravity"
+        android:textColor="#344891"
+        android:textSize="18dp" />
+</RelativeLayout>

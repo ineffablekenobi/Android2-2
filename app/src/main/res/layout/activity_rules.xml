@@ -8,6 +8,21 @@
     android:backgroundTint="@color/white"
     tools:context=".rules">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="563dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/bg1" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="395dp"
@@ -25,8 +40,14 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="355dp"
-        android:layout_height="481dp"
+        android:layout_width="370dp"
+        android:layout_height="509dp"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="5dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@color/black"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -47,13 +68,13 @@
 
     <Button
         android:id="@+id/nextbtn"
-        android:layout_width="98dp"
-        android:layout_height="68dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="115dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
         android:background="@mipmap/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

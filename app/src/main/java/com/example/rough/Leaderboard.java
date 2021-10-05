@@ -2,9 +2,15 @@ package com.example.rough;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import com.example.rough.DTO.User;
@@ -24,13 +30,23 @@ public class Leaderboard extends AppCompatActivity {
     private FirebaseFirestore db;
     public static ArrayList<User> users;
     public final int leaderBoardSize = 3;
-
-
+    private RecyclerView scorerv;
+    private ArrayList<EachPlayerScore> scoreList;
+    private myAd adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         users = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+        scorerv = (RecyclerView) findViewById(R.id.scorerv);
+        scoreList = new ArrayList<>();
+        adapter = new myAd(this);
+        adapter.setScoreList(scoreList);
+        scorerv.setAdapter(adapter);
+        scorerv.setLayoutManager(new LinearLayoutManager(this));
+
+
+
         db = FirebaseFirestore.getInstance();
         //processLeaderBoard();
         db.collection("Users")
@@ -59,13 +75,16 @@ public class Leaderboard extends AppCompatActivity {
                 });
 
                 // Use this to set leaderboard
-
+                scoreList.clear();
                 for(int i = 0; i < Math.min(users.size(), leaderBoardSize); i++){
                     User usr = users.get(i);
-                    Log.d(usr.getUsername() +": ", usr.getHighestScore()+"");
+                    Log.d("leaderboard", usr.getUsername() +": " + usr.getHighestScore()+"");
                     // put this on UI
+                    scoreList.add(new EachPlayerScore(usr.getHighestScore()+"", usr.getUsername()));
+                    adapter.notifyDataSetChanged();
 
                 }
+
 
             }
         });

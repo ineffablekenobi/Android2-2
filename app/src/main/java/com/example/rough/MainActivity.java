@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void randomizeSkipSound(){
-        //m2 = new MediaPlayer();
+        m2 = new MediaPlayer();
 
 
         if(skipSoundSources.size() == 0){
@@ -449,10 +449,10 @@ public class MainActivity extends AppCompatActivity {
         m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp.reset();
+                mp.release();
+                m2 = null;
             }
         });
-
         skipAudio();
 
         writingSpace.setText("");

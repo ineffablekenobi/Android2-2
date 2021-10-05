@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         getData();
 
 
-
         setContentView(R.layout.activity_main);
         //================loading screen
         animView = (LottieAnimationView) findViewById(R.id.animationView);
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         serial = (TextView) findViewById(R.id.serial);
         score = 0;
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
-
+        m2 = new MediaPlayer();
         flex();
 
 
@@ -132,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
+
                 loadGame();
 
             }
@@ -140,23 +140,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void randomizeSkipSound(){
-        m2 = new MediaPlayer();
-        if(skipSoundSources == null || skipSoundSources.size() == 0){
+        //m2 = new MediaPlayer();
+
+
+        if(skipSoundSources.size() == 0){
             try {
                 m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
                 m2.prepare();
             } catch (IOException e) {
+                Log.d("DATA SOURCE FAILED: ", e.toString());
+            }
+        }else {
+
+            SecureRandom random = new SecureRandom();
+            int index = random.nextInt() % skipSoundSources.size();
+            try {
+                m2.setDataSource(skipSoundSources.get(index));
+                m2.prepare();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-        SecureRandom random = new SecureRandom();
-        int index = random.nextInt() % skipSoundSources.size();
-        try {
-            m2.setDataSource(skipSoundSources.get(index));
-            m2.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -325,9 +328,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("String Array SIZE ", skipSoundSources.size() + "" );
             }
         });
-
-
-
     }
 
     public void play(){
@@ -438,9 +438,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void skip(View view){
-
         randomizeSkipSound();
-
         m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -451,12 +449,11 @@ public class MainActivity extends AppCompatActivity {
         m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp.release();
-                m2 = null;
-
-                skipAudio();
+                mp.reset();
             }
         });
+
+        skipAudio();
 
         writingSpace.setText("");
         audioProgress.setProgress(0);

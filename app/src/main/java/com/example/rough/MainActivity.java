@@ -28,32 +28,40 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.rough.DTO.Audio;
+import com.example.rough.DTO.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer m1;
+    MediaPlayer m2;
     ImageButton pp;
     EditText writingSpace;
     DocumentReference reference;
+    FirebaseFirestore db;
     ArrayList<Audio> audioList;
     int sessionPlayIndex ;
+    int skipSoundIndex;
     private static final int audioListSize = 15;
     private static int[][] stringCheckDp;
 
@@ -72,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     LottieAnimationView animView;
     LottieAnimationView loadingView;
 
+    ArrayList<String> skipSoundSources;
+
     public static int score = 0;
 
     @Override
@@ -80,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         // pause feature is removed
         super.onCreate(savedInstanceState);
         this.sessionPlayIndex = 0;
+
+        getData();
+
+
+
         setContentView(R.layout.activity_main);
         //================loading screen
         animView = (LottieAnimationView) findViewById(R.id.animationView);
@@ -103,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
         serial = (TextView) findViewById(R.id.serial);
         score = 0;
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
+
         flex();
-        getData();
 
 
     }
@@ -118,9 +133,31 @@ public class MainActivity extends AppCompatActivity {
 
             public void onFinish() {
                 loadGame();
+
             }
 
         }.start();
+    }
+
+    private void randomizeSkipSound(){
+        m2 = new MediaPlayer();
+        if(skipSoundSources == null || skipSoundSources.size() == 0){
+            try {
+                m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
+                m2.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        SecureRandom random = new SecureRandom();
+        int index = random.nextInt() % skipSoundSources.size();
+        try {
+            m2.setDataSource(skipSoundSources.get(index));
+            m2.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -239,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getData() {
         audioList = new ArrayList<>();
-        Log.d("delay ", "starting getData");
+        skipSoundSources = new ArrayList<>();
         for(int i  = 0; i < audioListSize; i++) {
             reference = FirebaseFirestore.getInstance().collection("Audio").document(i+"");
             reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -265,6 +302,30 @@ public class MainActivity extends AppCompatActivity {
 
             //loadGame();
         }
+
+        db = FirebaseFirestore.getInstance();
+        //processLeaderBoard();
+        db.collection("SkipSounds")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                skipSoundSources.add((String) document.get("dataSource"));
+                            }
+
+                        } else {
+                            Log.w("", "Error getting documents.", task.getException());
+                        }
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("String Array SIZE ", skipSoundSources.size() + "" );
+            }
+        });
+
 
 
     }
@@ -328,8 +389,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void startMedia() throws IOException {
 
         m1 = new MediaPlayer();
@@ -379,8 +438,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void skip(View view){
+
+        randomizeSkipSound();
+
+        m2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                m2.start();
+            }
+        });
         Log.d("buggy", "clicked skip");
-        skipAudio();
+        m2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+                m2 = null;
+
+                skipAudio();
+            }
+        });
 
         writingSpace.setText("");
         audioProgress.setProgress(0);

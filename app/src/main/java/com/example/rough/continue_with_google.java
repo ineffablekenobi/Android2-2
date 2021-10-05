@@ -55,10 +55,10 @@ public class continue_with_google extends AppCompatActivity {
             Intent intent = new Intent(this, frontPage.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("startUp", "yes");
+            bundle.putString("startUp", "no");
 
-            startActivity(new Intent(getApplicationContext(), rules.class).putExtras(bundle));
-            //startActivity(intent);
+            //startActivity(new Intent(getApplicationContext(), rules.class).putExtras(bundle));
+            startActivity(intent.putExtras(bundle));
             finish();
         }
     }
@@ -86,8 +86,10 @@ public class continue_with_google extends AppCompatActivity {
         try {
             account = completedTask.getResult(ApiException.class);
             Toast.makeText(this, "Log in successful", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, frontPage.class);
-            startActivity(intent);
+            Intent intent = new Intent(this, rules.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("startUp", "yes");
+            startActivity(intent.putExtras(bundle));
             finish();
             // Signed in successfully, show authenticated UI.
             findViewById(R.id.signingooglebtn).setVisibility(View.GONE);

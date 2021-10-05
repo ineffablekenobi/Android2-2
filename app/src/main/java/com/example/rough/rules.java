@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class rules extends AppCompatActivity {
 
     private Button next;
@@ -21,7 +19,7 @@ public class rules extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        next = (Button) findViewById(R.id.next);
+        next = (Button) findViewById(R.id.nextbtn);
         rulesText =  (TextView) findViewById(R.id.rulesText);
 
         rulesText.setText(R.string.rulestext);
@@ -37,8 +35,8 @@ public class rules extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(getApplicationContext(), frontPage.class));
+                finish();
             }
         });
     }

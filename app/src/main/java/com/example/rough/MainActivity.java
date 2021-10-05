@@ -415,7 +415,8 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     public void playSkipTrack(){
         String dataSource = "https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3";
         if(skipSoundSources != null && skipSoundSources.size() != 0){
-            dataSource = skipSoundSources.get((new SecureRandom()).nextInt() % skipSoundSources.size());
+            int index = Math.abs((new SecureRandom()).nextInt())%skipSoundSources.size();
+            dataSource = skipSoundSources.get(index);
         }
         Thread thread = new Thread(new SkipTrackService(dataSource));
         thread.start();

@@ -29,7 +29,7 @@ public class Leaderboard extends AppCompatActivity {
 
     private FirebaseFirestore db;
     public static ArrayList<User> users;
-    public final int leaderBoardSize = 3;
+    public final int leaderBoardSize = 5;
     private RecyclerView scorerv;
     private ArrayList<EachPlayerScore> scoreList;
     private myAd adapter;

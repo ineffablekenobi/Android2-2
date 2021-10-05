@@ -2,51 +2,20 @@
     <string name="app_name">uncalibrated</string>
     <string name="rulestext">
 
-package com.example.rough;\n
+\t\t\t\t1) The audio can only be played twice by the gamer.
 \n
-import androidx.appcompat.app.AppCompatActivity;\n
+\n\t\t\t\t2) The gamer has two chances \t\t to check the answer.
 \n
-import android.content.Intent;\n
-import android.os.Bundle;\n
-import android.view.View;\n
-import android.widget.Button;\n
-import android.widget.TextView;\n
+\n\t\t\t\t3) The gamer will not receive \t\t any points for skipping any audio.
 \n
-import org.w3c.dom.Text;\n
+\n\t\t\t\t4) The gamer must write an exact patterned answer, for example, if the audio plays am / I am, he must type it in the precise format without using an \t\tapostrophe sign.
 \n
-public class rules extends AppCompatActivity {\n
+\n\t\t\t\t5) If a player presses the check button during the countdown, he forfeits his one chance to double-check the answer.
 \n
-private Button next;\n
-private String startUp;\n
-private TextView rulesText;\n
+\n\t\t\t\t6)  The player can\'t skip the \taudio while hitting the play button; that is, he can\'t click the play button \tand skip the audio at the same time.
 \n
-@Override\n
-protected void onCreate(Bundle savedInstanceState) {\n
-super.onCreate(savedInstanceState);\n
-setContentView(R.layout.activity_rules);\n
-\n
-next = (Button) findViewById(R.id.next);\n
-rulesText =  (TextView) findViewById(R.id.rulesText);\n
-\n
-rulesText.setText(\"onek rules\");\n
-\n
-startUp = getIntent().getExtras().getString(\"startUp\");\n
-if(startUp.equals(\"yes\")) {\n
-next.setVisibility(View.VISIBLE);\n
-}\n
-else if(startUp.equals(\"no\")) {\n
-next.setVisibility(View.GONE);\n
-}\n
-\n
-next.setOnClickListener(new View.OnClickListener() {\n
-@Override\n
-public void onClick(View v) {\n
-finish();\n
-startActivity(new Intent(getApplicationContext(), frontPage.class));\n
-}\n
-});\n
-}\n
-}
+\n\t\t\t\t7) Only if the player\'s answer is 80 percent right will he receive a point for that audio.
+
 
     </string>
 </resources>

@@ -7,16 +7,31 @@
     android:background="#FFFFFF"
     tools:context=".Leaderboard">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="410dp"
+        android:layout_height="579dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/scorebg" />
+
     <TextView
         android:id="@+id/leaderboard_title"
-        android:layout_width="254dp"
-        android:layout_height="75dp"
+        android:layout_width="302dp"
+        android:layout_height="76dp"
         android:layout_marginTop="64dp"
         android:fontFamily="@font/coiny"
-        android:textAlignment="center"
         android:text="Leaderboard"
+        android:textAlignment="center"
         android:textColor="#20589E"
-        android:textSize="34sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFDFD"
+    android:background="#9A0EE4"
     android:backgroundTint="@color/white"
     tools:context=".rules">
 
@@ -25,8 +25,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="395dp"
-        android:layout_height="51dp"
+        android:layout_width="400dp"
+        android:layout_height="58dp"
+        android:background="#FFFFFF"
         android:fontFamily="@font/press_start_2p"
         android:text="YOUR GAME MY RULES"
         android:textAlignment="center"
@@ -34,36 +35,44 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintVertical_bias="0.081" />
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="370dp"
-        android:layout_height="509dp"
+        android:layout_width="373dp"
+        android:layout_height="536dp"
+        android:background="#B2D5EFDA"
         android:fadeScrollbars="false"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarSize="5dp"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbarThumbVertical="@color/black"
+        android:scrollbarThumbVertical="@color/teal_700"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.197">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/rulesText"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/atomic_age"
-            android:text="NO RULES"
+            android:fontFamily="@font/coiny"
+            android:text="1) The audio can only be played twice by the gamer.\n
+               2) The gamer has two chances to check the answer.\n
+               3) The gamer will not receive any points for skipping any audio.\n
+               4) The gamer must write an exact patterned answer, for example, if the audio plays am / I am, he must type it in the precise format without using an apostrophe sign.\n
+               5) If a player presses the check button during the countdown, he forfeits his one chance to double-check the answer.\n
+               6)  The player can't skip the audio while hitting the play button; that is, he can't click the play button and skip the audio at the same time. \n
+               7) Only if the player's answer is 80 percent right will he receive a point for that audio."
             android:textColor="#040404"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
     </ScrollView>
 
     <Button

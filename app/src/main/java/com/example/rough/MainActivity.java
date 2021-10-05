@@ -235,14 +235,15 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         if(goodPercentage >= 80) {
             //score count
             //change according to rules
-            goodPercentage -= (maxPlayLimit - playLimit) * 10;
-            goodPercentage -= (maxCheckLimit - checkLimit) * 15;
+            goodPercentage -= (maxPlayLimit - playLimit - 1) * 10;
+            goodPercentage -= (maxCheckLimit - checkLimit - 1) * 15;
             score += (int)goodPercentage;
             skipAudio();
         }
         Toast.makeText(this, "You've got " + String.valueOf(((int)goodPercentage)) + " points (Total: " + String.valueOf(score) + " )", Toast.LENGTH_SHORT).show();
         writingSpace.setText("");
     }
+
     private void loadGame() {
         animView.clearAnimation();
         loadingView.clearAnimation();

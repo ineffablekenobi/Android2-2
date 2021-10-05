@@ -5,17 +5,13 @@ import static java.lang.Math.min;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,12 +24,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.rough.DTO.Audio;
-import com.example.rough.DTO.User;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
+import com.example.rough.Services.SkipTrackService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +40,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -421,13 +411,17 @@ public class MainActivity extends AppCompatActivity implements Runnable{
         }
     }
 
-    public void skip(View view){
-
-
-        if(sessionPlayIndex != audioListSize) {
-            Thread thread = new Thread(new MainActivity());
-            thread.start();
+    public void playSkipTrack(){
+        String dataSource = "https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3";
+        if(skipSoundSources != null && skipSoundSources.size() != 0){
+            dataSource = skipSoundSources.get((new SecureRandom()).nextInt() % skipSoundSources.size());
         }
+        Thread thread = new Thread(new SkipTrackService(dataSource));
+        thread.start();
+    }
+
+    public void skip(View view)  {
+        playSkipTrack();
         skipAudio();
 
         writingSpace.setText("");
@@ -530,6 +524,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
 
     @Override
     public void run() {
+
         m2 = new MediaPlayer();
         try {
             m2.setDataSource("https://static.wikia.nocookie.net/dota2_gamepedia/images/1/14/Vo_axe_axe_deny_15.mp3");
@@ -542,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.start();
+                //skipBtn.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -550,6 +546,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
             public void onCompletion(MediaPlayer mp) {
                 mp.release();
                 m2 = null;
+                //skipBtn.setVisibility(View.VISIBLE);
             }
         });
 

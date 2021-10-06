@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
     EditText writingSpace;
     DocumentReference reference;
     FirebaseFirestore db;
-    ArrayList<Audio> audioList;
+    public static ArrayList<Audio> audioList;
 
     //Services
     SkipTrackService skipTrackService;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
 
     int sessionPlayIndex ;
     int skipSoundIndex;
-    private static final int audioListSize = 15;
+    public static final int audioListSize = 15;
     private static int[][] stringCheckDp;
 
     //==========
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity{
     LottieAnimationView animView;
     LottieAnimationView loadingView;
 
-    ArrayList<String> skipSoundSources;
+    public static ArrayList<String> skipSoundSources;
 
 
 
@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
+
+        initializePlaySkipTrack();
 
     }
 

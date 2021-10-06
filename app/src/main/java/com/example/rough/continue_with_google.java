@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.rough.Intro.IntroActivity;
+import com.example.rough.Services.DataLoaderService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +24,7 @@ public class continue_with_google extends AppCompatActivity {
     private static final int RC_SIGN_IN = 100;
     public static GoogleSignInAccount account;
     public static GoogleSignInClient mGoogleSignInClient;
+    DataLoaderService dataLoaderService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class continue_with_google extends AppCompatActivity {
             findViewById(R.id.signingooglebtn).setOnClickListener(V->signInWithGoogle());
         }else{
             // already signed in
+
+            Thread thread = new Thread(dataLoaderService);
+            thread.start();
             findViewById(R.id.signingooglebtn).setVisibility(View.INVISIBLE);
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, frontPage.class);
@@ -86,6 +91,8 @@ public class continue_with_google extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             account = completedTask.getResult(ApiException.class);
+            Thread thread = new Thread(dataLoaderService);
+            thread.start();
             Toast.makeText(this, "Log in successful", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, IntroActivity.class);
             Bundle bundle = new Bundle();

@@ -38,8 +38,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scorerv"
-        android:layout_width="406dp"
-        android:layout_height="557dp"
+        android:layout_width="364dp"
+        android:layout_height="564dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

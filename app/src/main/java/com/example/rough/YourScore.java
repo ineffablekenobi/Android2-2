@@ -117,7 +117,7 @@ public class YourScore extends AppCompatActivity {
 
                     } else {
                         user = new User(continue_with_google.account.getId(), continue_with_google.account.getGivenName(),
-                                0);
+                                MainActivity.score);
                         FirebaseFirestore.getInstance().collection("Users").document(userID).
                                 set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

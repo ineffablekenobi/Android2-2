@@ -10,8 +10,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
-        android:layout_width="match_parent"
-        android:layout_height="563dp"
+        android:layout_width="410dp"
+        android:layout_height="622dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,10 +25,13 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
         android:background="#FFFFFF"
         android:fontFamily="@font/press_start_2p"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
         android:text="YOUR GAME MY RULES"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -42,8 +45,10 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="373dp"
+        android:layout_width="match_parent"
         android:layout_height="536dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="#B2D5EFDA"
         android:fadeScrollbars="false"
         android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -64,6 +69,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/coiny"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
             android:text="1) The audio can only be played twice by the gamer.\n
                2) The gamer has two chances to check the answer.\n
                3) The gamer will not receive any points for skipping any audio.\n

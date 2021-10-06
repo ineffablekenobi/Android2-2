@@ -5,9 +5,12 @@ import static java.lang.Math.max;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.rough.DTO.User;
@@ -28,6 +31,8 @@ public class YourScore extends AppCompatActivity {
     //////
     private String userID;
     private static  User user;
+    private Button gotoLboard;
+
 
     SoundService soundService;
 
@@ -36,12 +41,27 @@ public class YourScore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_score);
         soundService = new SoundService();
-
+        gotoLboard = (Button) findViewById(R.id.gotoleaderboard);
         score = (TextView) findViewById(R.id.score) ;
         yourscore = (TextView) findViewById(R.id.gameOver_title) ;
+
+
+
         flex();
 
+
+
+
         putData();
+
+        gotoLboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), Leaderboard.class));
+            }
+        });
+
     }
 
     ///////////////////
@@ -55,6 +75,7 @@ public class YourScore extends AppCompatActivity {
             public void onFinish() {
                 //loadGame();
                 yourscore.setText("Your Score");
+                gotoLboard.setVisibility(View.VISIBLE);
                 score.setText(String.valueOf(scores));
                 soundService.playGameOverMusic();
             }

@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity{
 
     ArrayList<String> skipSoundSources;
 
+
+
     public static int score = 0;
 
 
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity{
         serial.setText("Audio " + String.valueOf(sessionPlayIndex + 1));
         flex();
 
+        checkBtn.setEnabled(false);
 
         writingSpace.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -418,8 +421,7 @@ public class MainActivity extends AppCompatActivity{
         m1 = mediaPlayerLoaderService.getMediaPlayer(sessionPlayIndex);
         currentAudio = mediaPlayerLoaderService.getCurrentAudio(sessionPlayIndex);
         m1.start();
-
-
+        checkBtn.setEnabled(true);
 
         writingSpace.setOnTouchListener(new View.OnTouchListener() {
             @Override

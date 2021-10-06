@@ -52,13 +52,19 @@
 
     <Button
         android:id="@+id/gotoleaderboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="36dp"
+        android:layout_width="187dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/gotoleaderboard"
+
         android:fontFamily="@font/coiny"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="goto leaderboard"
-        android:visibility="invisible"
+        android:textColor="#20589E"
+        android:textSize="16sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

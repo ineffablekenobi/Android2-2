@@ -2,11 +2,11 @@
     <string name="app_name">uncalibrated</string>
     <string name="rulestext">
 
-\t\t\t\t1) The audio can only be played \t\t\t\ttwice by the gamer.
+\t\t\t\t1) The audio can only be played twice by the gamer.
 \n
-\n\t\t\t\t2) The gamer has two chances \t\t to check the answer.
+\n\t\t\t\t2) The gamer has two chances to check the answer.
 \n
-\n\t\t\t\t3) The gamer will not receive \t\t any points for skipping any audio.
+\n\t\t\t\t3) The gamer will not receive any points for skipping any audio.
 \n
 \n\t\t\t\t4) The gamer must write an exact patterned answer, for example, if the audio plays am / I am, he must type it in the precise format without using an \t\tapostrophe sign.
 \n

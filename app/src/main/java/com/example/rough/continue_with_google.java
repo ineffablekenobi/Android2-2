@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.rough.Intro.IntroActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -86,7 +87,7 @@ public class continue_with_google extends AppCompatActivity {
         try {
             account = completedTask.getResult(ApiException.class);
             Toast.makeText(this, "Log in successful", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, rules.class);
+            Intent intent = new Intent(this, IntroActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("startUp", "yes");
             startActivity(intent.putExtras(bundle));

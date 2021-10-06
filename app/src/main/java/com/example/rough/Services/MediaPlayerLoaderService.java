@@ -1,5 +1,6 @@
 package com.example.rough.Services;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -12,14 +13,14 @@ import java.util.Queue;
 
 public class MediaPlayerLoaderService implements Runnable{
 
-    Queue<MediaPlayer> mediaPlayers;
-    Queue<Audio> loadedAudio;
+    ArrayList<MediaPlayer> mediaPlayers;
+    ArrayList<Audio> loadedAudio;
     ArrayList<Audio> audioList;
 
 
     public MediaPlayerLoaderService(ArrayList<Audio> audioList){
-        loadedAudio = new LinkedList<>();
-        mediaPlayers = new LinkedList<>();
+        loadedAudio = new ArrayList<>();
+        mediaPlayers = new ArrayList<>();
         this.audioList = audioList;
     }
 
@@ -29,6 +30,7 @@ public class MediaPlayerLoaderService implements Runnable{
         for(int i =0; i < audioList.size(); i++){
             MediaPlayer mediaPlayer = new MediaPlayer();
             Audio audio = audioList.get(i);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             try {
                 mediaPlayer.setDataSource(audioList.get(i).getDataSource());
                 mediaPlayer.prepareAsync();
@@ -45,12 +47,29 @@ public class MediaPlayerLoaderService implements Runnable{
         }
     }
 
-    public MediaPlayer getMediaPlayer(){
-        return mediaPlayers.poll();
+    public MediaPlayer getMediaPlayer(int index){
+        return mediaPlayers.get(index);
     }
 
-    public Audio getCurrentAudio(){
-        return loadedAudio.poll();
+    public Audio getCurrentAudio(int index){
+        return loadedAudio.get(index);
+    }
+
+    public void reloadMedia(Audio audio, int index){
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setDataSource(audio.getDataSource());
+            mediaPlayer.prepareAsync();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mediaPlayers.set(index, mp);
+            }
+        });
     }
 
 

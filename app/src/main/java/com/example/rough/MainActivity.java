@@ -269,13 +269,15 @@ public class MainActivity extends AppCompatActivity{
             }
 
 
-
             goodPercentage -= (maxPlayLimit - playLimit - 1) * 10;
             goodPercentage -= (maxCheckLimit - checkLimit - 1) * 15;
             score += (int)goodPercentage;
+            Toast.makeText(this, "You've got " + String.valueOf(((int)goodPercentage)) + " points (Total: " + String.valueOf(score) + " )", Toast.LENGTH_SHORT).show();
             skipAudio();
+        }else{
+            Toast.makeText(this,"Not Good Enough", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "You've got " + String.valueOf(((int)goodPercentage)) + " points (Total: " + String.valueOf(score) + " )", Toast.LENGTH_SHORT).show();
+
         writingSpace.setText("");
     }
 
@@ -411,8 +413,8 @@ public class MainActivity extends AppCompatActivity{
 
     private void startMedia() throws IOException {
 
-        m1 = mediaPlayerLoaderService.getMediaPlayer();
-        currentAudio = mediaPlayerLoaderService.getCurrentAudio();
+        m1 = mediaPlayerLoaderService.getMediaPlayer(sessionPlayIndex);
+        currentAudio = mediaPlayerLoaderService.getCurrentAudio(sessionPlayIndex);
         m1.start();
 
 
@@ -436,9 +438,10 @@ public class MainActivity extends AppCompatActivity{
                 //Log.d("Oncompletion", "is called");
 
                 stopMedia();
+
                 if(playLimit > 0 && !pp.isClickable()) {
                     setPlayBtnDisabled(false); //play btn is now enable(clickable)
-
+                    mediaPlayerLoaderService.reloadMedia(currentAudio, sessionPlayIndex);
                 }
             }
         });
@@ -455,6 +458,8 @@ public class MainActivity extends AppCompatActivity{
             audioTimer.cancel();
             audioProgress.setProgress(0);
         }
+
+
     }
 
     public void initializePlaySkipTrack(){

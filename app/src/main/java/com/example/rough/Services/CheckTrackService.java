@@ -38,8 +38,5 @@ public class CheckTrackService implements Runnable {
 
     }
 
-    public void playSound(){
-
-    }
 
 }

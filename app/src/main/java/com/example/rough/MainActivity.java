@@ -31,6 +31,7 @@ import com.example.rough.DTO.Audio;
 import com.example.rough.Services.CheckTrackService;
 import com.example.rough.Services.MediaPlayerLoaderService;
 import com.example.rough.Services.SkipTrackService;
+import com.example.rough.Services.Sounds.SoundService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity{
     SkipTrackService skipTrackService;
     MediaPlayerLoaderService mediaPlayerLoaderService;
     Audio currentAudio;
+    SoundService soundService;
 
     int sessionPlayIndex ;
     int skipSoundIndex;

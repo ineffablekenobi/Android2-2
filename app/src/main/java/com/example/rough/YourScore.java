@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.rough.DTO.User;
+import com.example.rough.Services.Sounds.SoundService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,10 +29,13 @@ public class YourScore extends AppCompatActivity {
     private String userID;
     private static  User user;
 
+    SoundService soundService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_score);
+        soundService = new SoundService();
 
         score = (TextView) findViewById(R.id.score) ;
         yourscore = (TextView) findViewById(R.id.gameOver_title) ;
@@ -52,6 +56,7 @@ public class YourScore extends AppCompatActivity {
                 //loadGame();
                 yourscore.setText("Your Score");
                 score.setText(String.valueOf(scores));
+                soundService.playGameOverMusic();
             }
 
         }.start();

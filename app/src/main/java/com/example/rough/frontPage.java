@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.rough.Services.Sounds.SoundService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,11 +22,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class frontPage extends AppCompatActivity {
 
+    SoundService soundService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_page);
+
+        soundService = new SoundService();
 
         Intent gameIntent = new Intent(this, MainActivity.class);
         //------
@@ -33,7 +38,8 @@ public class frontPage extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(gameIntent);
+            soundService.playEntryMusic();
+            startActivity(gameIntent);
             }
         });
 
